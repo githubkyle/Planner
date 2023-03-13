@@ -2,12 +2,6 @@ var rootEl = $("#root");
 
 var Currently = dayjs().format("HH");
 $(function() {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
   // $(rootEl).children("div").id('hour-');
   var FirstIds = $("rootEl")
     .children("div")
@@ -26,13 +20,6 @@ $(function() {
   // var 4pm = $('input[id="hour-16"]').val();
   // var 5pm = $('input[id="hour-17"]').val();
   // var 6pm = $('input[id="hour-18"]').val();
-
-  function Saving() {
-    localStorage.setItem(this.id, this.text);
-    this.text = "";
-  }
-
-  SaveThis.addEventListener("click", Saving);
 
   var Seven = document.getElementById("hour-7");
   var Eight = document.getElementById("hour-8");
@@ -58,15 +45,6 @@ $(function() {
     }
   });
 
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
   $("#hour-7").text = localStorage.getItem("hour-7");
   $("#hour-8").text = localStorage.getItem("hour-8");
   $("#hour-9").text = localStorage.getItem("hour-9");
@@ -79,8 +57,14 @@ $(function() {
   $("#hour-16").text = localStorage.getItem("hour-16");
   $("#hour-17").text = localStorage.getItem("hour-17");
   $("#hour-18").text = localStorage.getItem("hour-18");
-});
 
+  function Saving() {
+    localStorage.setItem(this.id, this.text);
+    this.text = "";
+  }
+
+  SaveThis.addEventListener("click", Saving);
+});
 var DayDisplay = dayjs().format("MMM D, YYYY");
 $("#currentDay").text(DayDisplay);
 console.log(DayDisplay);
