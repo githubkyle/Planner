@@ -60,7 +60,6 @@ $(function() {
 
   function Saving() {
     localStorage.setItem(this.id, this.text);
-    this.text = "";
   }
 
   SaveThis.addEventListener("click", Saving);
