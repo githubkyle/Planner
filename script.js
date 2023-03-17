@@ -1,13 +1,11 @@
 var rootEl = $("#root");
 
-var Currently = dayjs().format("HH");
+var Currently = dayjs().hour();
 $(function() {
   // $(rootEl).children("div").id('hour-');
-  var FirstIds = $("rootEl")
-    .children("div")
-    .id.eq(1);
-  var IdNumbers = FirstIds.slice(-1);
-  var SaveThis = document.getElementsByClassName("btn");
+  var Hourblocks = $(".time-block");
+
+  var SaveThis = $(".btn");
   // var 7am = $('input[id="hour-7"]').val();
   // var 8am = $('input[id="hour-8"]').val();
   // var 9am = $('input[id="hour-9"]').val();
@@ -35,20 +33,21 @@ $(function() {
   var Eightteen = document.getElementById("hour-18");
   var AllTimes = document.getElementsByClassName("time-block");
 
-  IdNumbers.forEach(element => {
-    if (element > Currently) {
-      element.attr("class", "future");
-    } else if (element < Currently) {
-      element.attr("class", "past");
+  Hourblocks.each(function() {
+    console.log(this);
+    if (this.dataset.hour > Currently) {
+      this.classList.add("future");
+    } else if (this.dataset.hour < Currently) {
+      this.classList.add("past");
     } else {
-      element.attr("class", "present");
+      this.classList.add("present");
     }
   });
 
-  $("#hour-7").text = localStorage.getItem("hour-7");
+  $("#hour-7 textarea").val(localStorage.getItem("hour-7"));
   $("#hour-8").text = localStorage.getItem("hour-8");
   $("#hour-9").text = localStorage.getItem("hour-9");
-  $("#hour-10").text = localStorage.getItem("hour-10");
+  $("#hour-10 textarea").val(localStorage.getItem("hour-10"));
   $("#hour-11").text = localStorage.getItem("hour-11");
   $("#hour-12").text = localStorage.getItem("hour-12");
   $("#hour-13").text = localStorage.getItem("hour-13");
@@ -59,11 +58,15 @@ $(function() {
   $("#hour-18").text = localStorage.getItem("hour-18");
 
   function Saving() {
-    localStorage.setItem(this.id, this.text);
+    localStorage.setItem(
+      this.parentElement.id,
+      this.parentElement.querySelector("textarea").value
+    );
   }
 
-  SaveThis.addEventListener("click", Saving);
+  SaveThis.on("click", Saving);
 });
+
 var DayDisplay = dayjs().format("MMM D, YYYY");
 $("#currentDay").text(DayDisplay);
 console.log(DayDisplay);
